@@ -2,6 +2,9 @@ require("dotenv").config();
 const { ApolloServer, gql } = require("apollo-server");
 const mongoose = require("mongoose");
 
+const Post = require("./models/Post");
+const User = require("./models/User");
+
 const typeDefs = gql`
   type Query {
     test: String!
