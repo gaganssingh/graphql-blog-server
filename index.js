@@ -1,5 +1,6 @@
-const { ApolloServer } = require("apollo-server");
-const gql = require("graphql-tag");
+require("dotenv").config();
+const { ApolloServer, gql } = require("apollo-server");
+const mongoose = require("mongoose");
 
 const typeDefs = gql`
   type Query {
@@ -18,6 +19,11 @@ const server = new ApolloServer({
   resolvers,
 });
 
-server
-  .listen({ port: 5000 })
+mongoose
+  .connect(process.env.MONGO_DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .then(() => server.listen({ port: 5000 }))
   .then((res) => console.log(`Server running at ${res.url}`));
